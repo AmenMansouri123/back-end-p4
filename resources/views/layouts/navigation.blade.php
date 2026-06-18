@@ -15,51 +15,38 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
+                        <x-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.index')">
+                            {{ __('Patient') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::check() && in_array(Auth::user()->rolename, ['tandarts', 'assistent']))
+                        <x-nav-link :href="route('tandarts.index')" :active="request()->routeIs('tandarts.index')">
+                            {{ __('Tandarts') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::check() && in_array(Auth::user()->rolename, ['mondhygienist', 'praktijkmanagement']))
+                        <x-nav-link :href="route('mondhygienist.index')" :active="request()->routeIs('mondhygienist.index')">
+                            {{ __('Mondhygienist') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                        <x-nav-link :href="route('praktijkmanagement.index')" :active="request()->routeIs('praktijkmanagement.index')">
+                            {{ __('Praktijkmanagement') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::check() && Auth::user()->rolename === 'tester')
+                        <x-nav-link :href="route('tester.index')" :active="request()->routeIs('tester.index')">
+                            {{ __('Tester') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
-            @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('patient.index')"
-            :active="request()->routeIs('patient.index')">
-            {{ __('Patient') }}
-        </x-nav-link>
-    </div>
-@endif
-
-@if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('praktijkmanagement.userroles')"
-            :active="request()->routeIs('praktijkmanagement.userroles')">
-            {{ __('Gebruikersrollen') }}
-        </x-nav-link>
-    </div>
-@endif
-    </div>
-
-@if (Auth::check() && in_array(Auth::user()->rolename, ['tandarts', 'assistent']))
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('tandarts.index')"
-            :active="request()->routeIs('tandarts.index')">
-            {{ __('Tandarts') }}
-        </x-nav-link>
-    </div>
-@endif
-@if (Auth::check() && in_array(Auth::user()->rolename, ['mondhygienist', 'praktijkmanagement']))
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('mondhygienist.index')"
-            :active="request()->routeIs('mondhygienist.index')">
-            {{ __('Mondhygienist') }}
-        </x-nav-link>
-    </div>
-@endif
-@if (Auth::check() && in_array(Auth::user()->rolename, ['praktijkmanagement']))
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('praktijkmanagement.index')"
-            :active="request()->routeIs('praktijkmanagement.index')">
-            {{ __('Praktijkmanagement') }}
-        </x-nav-link>
-    </div>
-@endif
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -113,6 +100,36 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
+                <x-responsive-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.index')">
+                    {{ __('Patient') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && in_array(Auth::user()->rolename, ['tandarts', 'assistent']))
+                <x-responsive-nav-link :href="route('tandarts.index')" :active="request()->routeIs('tandarts.index')">
+                    {{ __('Tandarts') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && in_array(Auth::user()->rolename, ['mondhygienist', 'praktijkmanagement']))
+                <x-responsive-nav-link :href="route('mondhygienist.index')" :active="request()->routeIs('mondhygienist.index')">
+                    {{ __('Mondhygienist') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                <x-responsive-nav-link :href="route('praktijkmanagement.index')" :active="request()->routeIs('praktijkmanagement.index')">
+                    {{ __('Praktijkmanagement') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && Auth::user()->rolename === 'tester')
+                <x-responsive-nav-link :href="route('tester.index')" :active="request()->routeIs('tester.index')">
+                    {{ __('Tester') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

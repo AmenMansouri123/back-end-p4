@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -21,36 +22,49 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'rolename'
+        'rolename',
     ];
+
     /**
  * The attributes that should be hidden for serialization.
  *
  * @var list<string>
  */
-protected $hidden = [
-    'password',
-    'remember_token',
-];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
 /**
  * Get the attributes that should be cast.
  *
  * @return array<string, string>
  */
-protected function casts(): array
-{
-    return [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-}
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
 
-public function sp_GetAllUsers($user_Id)
-{
-    $result = DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
+    public function getUsersWithRoles()
+    {
+        return self::query()
+            ->select('id', 'name', 'email', 'rolename')
+            ->orderBy('name')
+            ->get();
+    }
 
-    return $result;
-}
-}
+    public function updateUserRoles($userId, $role)
+    {
+        return self::query()
+            ->whereKey($userId)
+            ->update(['rolename' => $role]);
+    }
 
+    public function sp_GetAllUsers($user_Id)
+    {
+        return DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
+    }
+}
