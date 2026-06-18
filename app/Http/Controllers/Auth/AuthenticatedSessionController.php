@@ -36,6 +36,7 @@ class AuthenticatedSessionController extends Controller
             'mondhygienist' => route('mondhygienist.index'),
             'assistent' => route('assistent.index'),
             'praktijkmanagement' => route('praktijkmanagement.index'),
+            'tester' => route('tester.index'),
             default => route('welcome'),
         });
     }
