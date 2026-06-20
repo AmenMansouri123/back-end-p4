@@ -48,6 +48,15 @@ class User extends Authenticatable
         ];
     }
 
+
+    public function sp_GetAllUsers($user_Id)
+    {
+        $result = DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]); 
+
+        return $result;
+     }
+
+
     public function getUsersWithRoles()
     {
         return self::query()
@@ -63,8 +72,45 @@ class User extends Authenticatable
             ->update(['rolename' => $role]);
     }
 
-    public function sp_GetAllUsers($user_Id)
+    public function sp_GetAllUserroles()
     {
-        return DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
-    }
+        $result = DB::select('CALL sp_GetAllUserroles()'); 
+        return $result;
+     }
+
+public function sp_UpdateUser($id, $name, $email, $rolename)
+{
+    $result = DB::selectOne(
+        'CALL Sp_UpdateUser(:id, :name, :email, :rolename)',
+        [
+            'id' => $id,
+            'name' => $name,
+            'email' => $email,
+            'rolename' => $rolename
+        ]
+    );
+}
+
+
+
+
+public function sp_GetUserById($id)
+{
+    return DB::selectOne('CALL sp_GetUserById(?)', [$id]);
+}
+
+
+
+public function sp_DeleteUser($userId)
+{
+    $result = DB::selectOne('CALL sp_DeleteUser(:userId)', [
+        'userId' => $userId
+    ]);
+
+    return $result->affected;
+}
+
+
+
+
 }

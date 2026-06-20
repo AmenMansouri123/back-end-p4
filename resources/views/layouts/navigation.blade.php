@@ -22,6 +22,15 @@
                         </x-nav-link>
                     @endif
 
+                    @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                              <x-nav-link :href="route('praktijkmanagement.userroles')"
+                                          :active="request()->routeIs('praktijkmanagement.userroles')">
+                                 {{ __('Gebruikersrollen') }}
+                                 </x-nav-link>
+                        </div>
+                    @endif
+
                     @if (Auth::check() && in_array(Auth::user()->rolename, ['tandarts', 'assistent']))
                         <x-nav-link :href="route('tandarts.index')" :active="request()->routeIs('tandarts.index')">
                             {{ __('Tandarts') }}
@@ -46,6 +55,8 @@
                         </x-nav-link>
                     @endif
                 </div>
+
+                
             </div>
 
             <!-- Settings Dropdown -->

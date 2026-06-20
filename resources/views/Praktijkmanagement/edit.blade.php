@@ -1,36 +1,56 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">
-            {{ $title }}
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+          <h1>{{ $title }}</h1>
 
-            <form method="POST" action="{{ route('praktijkmanagement.update', $user->id) }}">
-                @csrf
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $err)
+                <li>{{ $err }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-                <div>
-                    <label>Naam</label>
-                    <input type="text" name="name" value="{{ $user->name }}">
-                </div>
+<form method="POST" action="{{ route('praktijkmanagement.update', $user->id) }}">
+    @csrf
+    @method('PUT')
 
-                <div>
-                    <label>Email</label>
-                    <input type="email" name="email" value="{{ $user->email }}">
-                </div>
+    <div class="mb-3">
+        <label for="InputName" class="form-label">Naam</label>
+        <input name="name" type="text" class="form-control" id="InputName"
+               aria-describedby="nameHelp" value="{{ old('name', $user->name) }}">
+    </div>
 
-                <div>
-                    <label>Rol</label>
-                    <input type="text" name="rolename" value="{{ $user->rolename }}">
-                </div>
+    <div class="mb-3">
+        <label for="InputDescription" class="form-label">Email</label>
+        <input name="email" type="email" class="form-control" id="InputDescription"
+               aria-describedby="descriptionHelp" value="{{ old('email', $user->email) }}">
+    </div>
 
-                <button type="submit" class="btn btn-success">
-                    Opslaan
-                </button>
-            </form>
+    <div class="mb-3">
+        <label for="InputRolename" class="form-label">Gebruikersrol</label>
 
+        <select name="rolename" class="form-select" aria-label="InputRolename">
+            @foreach ($userroles as $userrole)
+                <option value="{{ $userrole->rolename }}"
+                    @selected($userrole->rolename == $user->rolename)>
+                    {{ $userrole->rolename }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Opslaan</button>
+
+    <a href="{{ route('praktijkmanagement.index') }}"
+       class="btn btn-secondary">Annuleren</a>
+</form>
+           </div>
+            </div>
         </div>
     </div>
 </x-app-layout>

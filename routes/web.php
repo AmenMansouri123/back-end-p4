@@ -8,6 +8,8 @@ use App\Http\Controllers\MondhygienistController;
 use App\Http\Controllers\PraktijkmanagementController;
 use App\Http\Controllers\TesterController;
 use Illuminate\Support\Facades\Route;
+   
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,11 +33,55 @@ Route::get('/mondhygienist', [MondhygienistController::class, 'index'])
 
 Route::get('/praktijkmanagement', [PraktijkmanagementController::class, 'index'])
     ->name('praktijkmanagement.index')
-    ->middleware(['auth', 'role:praktijkmanagement,patient']);
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+
+    # Praktijkmanagement-Routes
+
+Route::get('/praktijkmanagement', [PraktijkmanagementController::class, 'index'])
+    ->name('praktijkmanagement.index')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/userroles', [PraktijkmanagementController::class, 'manageUserroles'])
+    ->name('praktijkmanagement.userroles')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}/edit', [PraktijkmanagementController::class, 'edit'])
+    ->name('praktijkmanagement.edit')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::delete('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'destroy'])
+    ->name('praktijkmanagement.destroy')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'show'])
+    ->name('praktijkmanagement.show')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+    Route::get('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'update'])
+    ->name('praktijkmanagement.update')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+
+
+
+Route::get('/praktijkmanagement/userroles/{id}', [PraktijkmanagementController::class, 'show'])
+    ->name('praktijkmanagement.show');
+
+
+
+
+
+Route::put('/praktijkmanagement/{id}', 
+    [PraktijkmanagementController::class, 'update']
+)->name('praktijkmanagement.update');
+
+
+    
 
 Route::get('/tester', [TesterController::class, 'index'])
     ->name('tester.index')
-    ->middleware(['auth', 'role:praktijkmanagement,tester']);
+    ->middleware(['auth', 'role:praktijkmanagement']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

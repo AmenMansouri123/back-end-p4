@@ -1,10 +1,10 @@
 USE breezedemo;
 
-DROP PROCEDURE IF EXISTS Sp_GetAllUsers;
+DROP PROCEDURE IF EXISTS Sp_GetUserById;
 
 DELIMITER $$
 
-CREATE PROCEDURE Sp_GetAllUsers(
+CREATE PROCEDURE Sp_GetUserById(
     IN p_Id INTEGER
     )
 BEGIN
@@ -14,7 +14,7 @@ BEGIN
           ,USRS.email
           ,USRS.rolename
     FROM Users as USRS
-    WHERE USRS.Id != p_Id;
+    WHERE USRS.Id = p_Id;
     
 END$$
 
